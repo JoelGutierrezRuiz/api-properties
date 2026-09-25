@@ -39,6 +39,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/user/**").authenticated()
+                        // scrapers externos (pisos.com, idealista...): solo usuarios logueados con Google
+                        .requestMatchers("/api/pisos/**", "/api/idealista/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(oAuth2LoginReferrerFilter, OAuth2AuthorizationRequestRedirectFilter.class)
